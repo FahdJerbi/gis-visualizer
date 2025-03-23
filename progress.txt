@@ -1,0 +1,25 @@
+
+*/ Planning:
+- what's the project objectives:
+    this is a portal for downloading data from osm, and to create your own shapefiles
+
+
+*/ Backend:
+[x] dependencies: 
+    express, mongoose, nodemon, env
+[ ] init github repo
+[ ] prepare database
+[ ] user model
+[ ] routes: 
+    - login
+    - register
+[ ] documentation
+
+*/ Frontend:
+[x] dependencies:
+    vite, leaflet, tailwindcss/bootstrap, Overpass API ?? ,
+[ ] UI design: sidebar, basemap group
+[ ] download data: Overpass APIs ??
+[ ] add basemaps: osm, sat, add a custom basemap option (WMS)
+[ ] Leaflet plugins: 
+        https://github.com/Leaflet/Leaflet.Editable
