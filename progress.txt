@@ -7,9 +7,9 @@
 */ Backend:
 [x] dependencies: 
     express, mongoose, nodemon, env
-[ ] init github repo
-[ ] prepare database
-[ ] user model
+[x] init github repo
+[x] prepare database
+[x] user model
 [ ] routes: 
     - login
     - register
@@ -18,8 +18,9 @@
 */ Frontend:
 [x] dependencies:
     vite, leaflet, tailwindcss/bootstrap, Overpass API ?? ,
-[ ] UI design: sidebar, basemap group
+[ ] UI design: 
+    [ ] sidebar + map  
+    [ ] add basemap group: osm, sat, add a custom basemap option (WMS)
 [ ] download data: Overpass APIs ??
-[ ] add basemaps: osm, sat, add a custom basemap option (WMS)
-[ ] Leaflet plugins: 
+[ ] draw shapefiles Leaflet plugins: 
         https://github.com/Leaflet/Leaflet.Editable
