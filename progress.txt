@@ -11,8 +11,8 @@
 [x] prepare database
 [x] user model
 [ ] routes: 
+    -[x] register
     - login
-    - register
 [ ] documentation
 
 */ Frontend:

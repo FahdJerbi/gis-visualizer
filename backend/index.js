@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
 const connectDB = require("./db/connect.js");
+const userRoutes = require("./routes/userRoutes.js");
+
+app.use(express.json());
 
 // auth routes
-// app.use("/api/auth", userRoutes);
+app.use("/api/auth", userRoutes);
 
 app.get("/", async (req, res) => {
   res.status(200).send("first route");
