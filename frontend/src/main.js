@@ -1,6 +1,7 @@
 import "./style.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import osmtogeojson from "osmtogeojson";
 import ways from "../data/ways";
 import polygon from "../data/polygon";
 import "../node_modules/leaflet-geosearch/dist/geosearch.css";
@@ -35,7 +36,7 @@ const basemaps = {
 L.geoJSON([ways, polygon]).addTo(map);
 
 //*********** layer group ***********
-const layerGroup = L.control.layers(basemaps).addTo(map);
+const layerGroup = L.control.layers(basemaps).addTo(map).expand();
 
 //*********** geosearch plugin ***********
 const search = new GeoSearch.GeoSearchControl({
@@ -43,3 +44,38 @@ const search = new GeoSearch.GeoSearchControl({
 });
 
 map.addControl(search);
+
+//***********Overpass API  ***********
+
+const result = await fetch("https://overpass-api.de/api/interpreter", {
+  method: "POST",
+  // The body contains the query
+  // to understand the query language see "The Programmatic Query Language" on
+  // https://wiki.openstreetmap.org/wiki/Overpass_API#The_Programmatic_Query_Language_(OverpassQL)
+  body:
+    "data=" +
+    encodeURIComponent(`
+      [out:json][timeout:100];
+      (way[highway]
+        (
+          36.72398412345187,
+   	      10.001727255982814,
+          36.74050698680756,
+          10.025224131320357
+        );
+      );
+        out body;
+        >;
+        out skel qt;
+      `),
+})
+  .then((data) => data.json())
+  .catch((err) => console.log(err));
+
+// console.log(JSON.stringify(result, null, 2));
+
+const convertResult = osmtogeojson(result);
+
+console.log(convertResult);
+
+L.geoJSON(convertResult).addTo(map);
