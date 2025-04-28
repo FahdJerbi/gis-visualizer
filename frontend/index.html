@@ -17,6 +17,102 @@
       crossorigin="anonymous"
     ></script>
     <title>Vite App</title>
+    <style>
+      .tabs {
+        display: flex;
+        margin-bottom: 10px;
+      }
+      .tab-button {
+        flex: 1;
+        padding: 10px;
+        cursor: pointer;
+        text-align: center;
+        background-color: #979797;
+        border: 1px solid #ccc;
+        border-bottom: none;
+      }
+      .tab-button.active {
+        background-color: #ff8a8a;
+        font-weight: bold;
+      }
+      .tab-content {
+        /* border: 1px solid #ccc; */
+        padding: 15px;
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .layer-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #585858;
+      }
+      .layer-name {
+        font-weight: bold;
+        flex: 1;
+      }
+      .card-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 20px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #4caf50;
+      }
+      input:checked + .slider:before {
+        transform: translateX(20px);
+      }
+      button.delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button.delete-btn:hover {
+        background-color: #e60000;
+      }
+    </style>
   </head>
   <body>
     <!-- svg logos -->
@@ -141,79 +237,68 @@
             <svg class="bi me-2" width="40" height="32">
               <use xlink:href="#bootstrap" />
             </svg>
-            <span class="fs-4">Sidebar</span>
+            <span class="fs-4">GIS Visualizer</span>
           </a>
           <hr />
-          <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-              <a href="#" class="nav-link active" aria-current="page">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#home" />
-                </svg>
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#speedometer2" />
-                </svg>
-                Dashboard
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#table" />
-                </svg>
-                Orders
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#grid" />
-                </svg>
-                Products
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#people-circle" />
-                </svg>
-                Customers
-              </a>
-            </li>
-          </ul>
-          <hr />
-          <div class="dropdown">
-            <a
-              href="#"
-              class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-              id="dropdownUser1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+          <!-- ******************************************************************** -->
+
+          <!-- <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="nav-home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-home"
+                type="button"
+                role="tab"
+                aria-controls="nav-home"
+                aria-selected="true"
+              >
+                Layers
+              </button>
+              <button
+                class="nav-link"
+                id="nav-profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-profile"
+                type="button"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="false"
+              >
+                Search
+              </button>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+              tabindex="0"
+            ></div>
+            <div
+              class="tab-pane fade"
+              id="nav-profile"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+              tabindex="0"
             >
-              <img
-                src="https://github.com/mdo.png"
-                alt=""
-                width="32"
-                height="32"
-                class="rounded-circle me-2"
-              />
-              <strong>mdo</strong>
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark text-small shadow"
-              aria-labelledby="dropdownUser1"
-            >
-              <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
+              search
+            </div>
+          </div> -->
+
+          <!-- ******************************************************************** -->
+          <div class="tabs">
+            <div class="tab-button active" data-tab="layers">Layers</div>
+            <div class="tab-button" data-tab="search">Search</div>
+          </div>
+
+          <div id="layers" class="tab-content active"></div>
+
+          <div id="search" class="tab-content">
+            <p style="color: gray; text-align: center">coming soon...</p>
           </div>
         </div>
       </div>
@@ -224,5 +309,6 @@
 
     <!-- toolbar -->
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/pages/layersTab.js"></script>
   </body>
 </html>
