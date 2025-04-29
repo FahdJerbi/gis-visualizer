@@ -18,9 +18,11 @@
 */ Frontend:
 [x] dependencies:
     vite, leaflet, tailwindcss/bootstrap, Overpass API ?? ,
-[ ] UI design: 
-    [ ] sidebar + map  
-    [ ] add basemap group: osm, sat, add a custom basemap option (WMS)
-[ ] download data: Overpass APIs ??
-[ ] draw shapefiles Leaflet plugins: 
-        https://github.com/Leaflet/Leaflet.Editable
+[x] UI design: 
+    [x] sidebar + map  
+    [x] add basemap group: osm, sat, add a custom basemap option (WMS)
+[x] download data: Overpass APIs ??
+[x] draw shapefiles Leaflet plugins:  Leaflet Geoman
+[ ] add layer card:
+    [ ] layer funcionalities: delete, show/hide, download, attribute table 
+[x] get bbox and fetch data
