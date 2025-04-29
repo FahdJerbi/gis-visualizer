@@ -1,6 +1,8 @@
 import "./style.css";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import "@geoman-io/leaflet-geoman-free";
+import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import osmtogeojson from "osmtogeojson";
 import ways from "../data/ways";
 import polygon from "../data/polygon";
@@ -79,3 +81,16 @@ const convertResult = osmtogeojson(result);
 console.log(convertResult);
 
 L.geoJSON(convertResult).addTo(map);
+
+// Draw tool
+map.pm.addControls({
+  position: "topleft",
+  drawRectangle: true,
+  drawMarker: false,
+  drawCircleMarker: false,
+  drawCircle: false,
+  drawPolyline: false,
+  drawPolygon: false,
+  drawText: false,
+  editControls: false,
+});
