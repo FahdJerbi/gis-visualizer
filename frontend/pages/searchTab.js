@@ -1,9 +1,8 @@
 import L from "leaflet";
-import "@geoman-io/leaflet-geoman-free";
 import osmtogeojson from "osmtogeojson";
 
 // get bbox bounds
-const getMyData = (map) => {
+export const getMyData = (map) => {
   map.on("pm:create", async (e) => {
     // get bounds
     const bounds = e.layer._bounds;
@@ -42,4 +41,33 @@ const getMyData = (map) => {
   });
 };
 
-export default getMyData;
+// Search menu
+const optionsList = ["Roads", "Buildings", "Rivers", "Address"];
+
+const searchContainer = document.getElementById("search");
+
+function searchCriteria() {
+  optionsList.forEach((data, dataId) => {
+    const optionsDiv = document.createElement("div");
+    optionsDiv.className = "form-check";
+
+    const optionsInput = document.createElement("input");
+    optionsInput.className = "form-check-input";
+    optionsInput.type = "checkbox";
+    // optionsInput.value = "";
+    optionsInput.id = dataId;
+
+    const optionsLabel = document.createElement("label");
+    optionsLabel.className = "form-check-label";
+    // optionsLabel.value = "";
+    optionsLabel.htmlFor = dataId;
+    optionsLabel.textContent = data;
+
+    optionsDiv.appendChild(optionsLabel);
+    optionsDiv.appendChild(optionsInput);
+
+    searchContainer.appendChild(optionsDiv);
+  });
+}
+
+searchCriteria();

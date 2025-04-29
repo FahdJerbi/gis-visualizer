@@ -35,7 +35,6 @@ function showLayers() {
     const switcherLabel = document.createElement("label");
     switcherLabel.className = "form-check-label";
     switcherLabel.htmlFor = "switchCheckChecked";
-    switcherLabel.f;
 
     switcher.appendChild(switcherInput);
     switcher.appendChild(switcherLabel);

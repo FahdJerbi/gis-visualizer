@@ -8,7 +8,8 @@ import ways from "../data/ways";
 import polygon from "../data/polygon";
 import "../node_modules/leaflet-geosearch/dist/geosearch.css";
 import * as GeoSearch from "leaflet-geosearch";
-import getMyData from "../pages/searchTab";
+import { getMyData } from "../pages/searchTab";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const map = L.map("map").setView([33.769, 8.746], 6);
 
