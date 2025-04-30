@@ -23,6 +23,8 @@
     [x] add basemap group: osm, sat, add a custom basemap option (WMS)
 [x] download data: Overpass APIs ??
 [x] draw shapefiles Leaflet plugins:  Leaflet Geoman
+[x] get bbox and fetch data
 [ ] add layer card:
     [ ] layer funcionalities: delete, show/hide, download, attribute table 
-[x] get bbox and fetch data
+[ ] modify the basemap group (add a photo)
+[ ] add bootstrap Toast/notifications

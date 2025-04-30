@@ -37,7 +37,7 @@ const basemaps = {
 };
 
 //*********** add GeoJSON data ***********
-L.geoJSON([ways, polygon]).addTo(map);
+// L.geoJSON([ways, polygon]).addTo(map);
 
 //*********** layer group ***********
 const layerGroup = L.control.layers(basemaps).addTo(map).expand();
@@ -49,40 +49,41 @@ const search = new GeoSearch.GeoSearchControl({
 
 map.addControl(search);
 
-//***********Overpass API  ***********
+//***********Overpass API: start  ***********
 
-const result = await fetch("https://overpass-api.de/api/interpreter", {
-  method: "POST",
-  // The body contains the query
-  // to understand the query language see "The Programmatic Query Language" on
-  // https://wiki.openstreetmap.org/wiki/Overpass_API#The_Programmatic_Query_Language_(OverpassQL)
-  body:
-    "data=" +
-    encodeURIComponent(`
-      [out:json][timeout:100];
-      (way[highway]
-        (
-          36.80697611816896,
-          10.136795558181547,
-          36.81102811921565,
-          10.140848587892748
-        );
-      );
-        out body;
-        >;
-        out skel qt;
-      `),
-})
-  .then((data) => data.json())
-  .catch((err) => console.log(err));
+// const result = await fetch("https://overpass-api.de/api/interpreter", {
+//   method: "POST",
+//   // The body contains the query
+//   // to understand the query language see "The Programmatic Query Language" on
+//   // https://wiki.openstreetmap.org/wiki/Overpass_API#The_Programmatic_Query_Language_(OverpassQL)
+//   body:
+//     "data=" +
+//     encodeURIComponent(`
+//       [out:json][timeout:100];
+//       (way[highway]
+//         (
+//           36.80697611816896,
+//           10.136795558181547,
+//           36.81102811921565,
+//           10.140848587892748
+//         );
+//       );
+//         out body;
+//         >;
+//         out skel qt;
+//       `),
+// })
+//   .then((data) => data.json())
+//   .catch((err) => console.log(err));
 
-// console.log(JSON.stringify(result, null, 2));
+// // console.log(JSON.stringify(result, null, 2));
 
-const convertResult = osmtogeojson(result);
+// const convertResult = osmtogeojson(result);
 
-// console.log(convertResult);
+// // console.log(convertResult);
 
-L.geoJSON(convertResult).addTo(map);
+// L.geoJSON(convertResult).addTo(map);
+//***********Overpass API: end  ***********
 
 // Draw tool
 map.pm.addControls({

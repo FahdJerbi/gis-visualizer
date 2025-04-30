@@ -47,6 +47,27 @@ const optionsList = ["Roads", "Buildings", "Rivers", "Address"];
 const searchContainer = document.getElementById("search");
 
 function searchCriteria() {
+  const searchPlace = document.createElement("div");
+  searchPlace.className = "search-place";
+  searchPlace.textContent = "1-search";
+  const searchPlaceText = document.createElement("p");
+  searchPlaceText.textContent =
+    "Use search tool on map to look for specific place, city...";
+
+  const boundingArea = document.createElement("div");
+  boundingArea.className = "search-place";
+  boundingArea.textContent = "2-bounding box:";
+  const boundingAreaText = document.createElement("p");
+  boundingAreaText.textContent =
+    "Use rectangle tool on map to select area of interest.";
+
+  searchPlace.appendChild(searchPlaceText);
+
+  boundingArea.appendChild(boundingAreaText);
+
+  searchContainer.appendChild(searchPlace);
+  searchContainer.appendChild(boundingArea);
+
   optionsList.forEach((data, dataId) => {
     const optionsDiv = document.createElement("div");
     optionsDiv.className = "form-check";
@@ -68,6 +89,13 @@ function searchCriteria() {
 
     searchContainer.appendChild(optionsDiv);
   });
+  // validation button
+  const validationBtn = document.createElement("button");
+  validationBtn.className = "btn btn-secondary";
+  validationBtn.type = "button";
+  validationBtn.textContent = "Fetch Data ";
+
+  searchContainer.appendChild(validationBtn);
 }
 
 searchCriteria();
