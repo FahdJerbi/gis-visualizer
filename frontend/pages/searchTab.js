@@ -1,101 +1,68 @@
-import L from "leaflet";
+import { osmTagMapping } from "../queries/queries.js";
+import { map } from "../src/main.js";
 import osmtogeojson from "osmtogeojson";
 
-// get bbox bounds
-export const getMyData = (map) => {
-  map.on("pm:create", async (e) => {
-    // get bounds
+// *****************************  Fetch data Btn: start  *****************************
+
+// get bbox
+let coordString;
+function bboxCoord(mapVariable) {
+  map.on("pm:create", (e) => {
     const bounds = e.layer._bounds;
-    const bound_NE = e.layer._bounds._northEast;
-    const bound_SW = e.layer._bounds._southWest;
-    console.log("create event:", bounds);
-    console.log("NE coord:", bound_NE);
-    console.log("SW coord:", bound_SW);
-
-    // fetch the data
-    const myData = await fetch("https://overpass-api.de/api/interpreter", {
-      method: "POST",
-      body:
-        "data=" +
-        encodeURIComponent(`
-          [out:json][timeout:100];
-          (way[highway]
-            (
-              ${bound_SW.lat},
-              ${bound_SW.lng},
-              ${bound_NE.lat},
-              ${bound_NE.lng}
-            );
-          );
-            out body;
-            >;
-            out skel qt;
-          `),
-    })
-      .then((myData) => myData.json())
-      .catch((error) => console.log(error));
-
-    const convertMyData = osmtogeojson(myData);
-
-    L.geoJSON(convertMyData).addTo(map);
+    const boundsString = `${bounds._southWest.lat}, ${bounds._southWest.lng},${bounds._northEast.lat},${bounds._northEast.lng}`;
+    coordString = boundsString;
+    console.log("boundsString:", boundsString);
   });
-};
-
-// Search menu
-const optionsList = ["Roads", "Buildings", "Rivers", "Address"];
-
-const searchContainer = document.getElementById("search");
-
-function searchCriteria() {
-  const searchPlace = document.createElement("div");
-  searchPlace.className = "search-place";
-  searchPlace.textContent = "1-search";
-  const searchPlaceText = document.createElement("p");
-  searchPlaceText.textContent =
-    "Use search tool on map to look for specific place, city...";
-
-  const boundingArea = document.createElement("div");
-  boundingArea.className = "search-place";
-  boundingArea.textContent = "2-bounding box:";
-  const boundingAreaText = document.createElement("p");
-  boundingAreaText.textContent =
-    "Use rectangle tool on map to select area of interest.";
-
-  searchPlace.appendChild(searchPlaceText);
-
-  boundingArea.appendChild(boundingAreaText);
-
-  searchContainer.appendChild(searchPlace);
-  searchContainer.appendChild(boundingArea);
-
-  optionsList.forEach((data, dataId) => {
-    const optionsDiv = document.createElement("div");
-    optionsDiv.className = "form-check";
-
-    const optionsInput = document.createElement("input");
-    optionsInput.className = "form-check-input";
-    optionsInput.type = "checkbox";
-    // optionsInput.value = "";
-    optionsInput.id = dataId;
-
-    const optionsLabel = document.createElement("label");
-    optionsLabel.className = "form-check-label";
-    // optionsLabel.value = "";
-    optionsLabel.htmlFor = dataId;
-    optionsLabel.textContent = data;
-
-    optionsDiv.appendChild(optionsLabel);
-    optionsDiv.appendChild(optionsInput);
-
-    searchContainer.appendChild(optionsDiv);
-  });
-  // validation button
-  const validationBtn = document.createElement("button");
-  validationBtn.className = "btn btn-secondary";
-  validationBtn.type = "button";
-  validationBtn.textContent = "Fetch Data ";
-
-  searchContainer.appendChild(validationBtn);
 }
 
-searchCriteria();
+bboxCoord(map);
+
+// get checkboxes and build query
+const fetchBtn = document.getElementById("fetch-btn");
+fetchBtn.addEventListener("click", fetchSearchData);
+
+async function fetchSearchData() {
+  const checkboxes = document.querySelectorAll(
+    '#data-form input[name="layer"]:checked'
+  );
+
+  const layers = Array.from(checkboxes).map((layer) => layer.value);
+  // console.log(checkboxes);
+
+  // console.log("coordString:", coordString);
+
+  const query = [];
+
+  for (const layer of layers) {
+    const tag = osmTagMapping[layer];
+    if (tag) {
+      query.push(`${tag}(${coordString});`);
+    }
+  }
+
+  const fullQuery = `
+      [out:json][timeout:100];
+        (
+        ${query.join("\n")}
+        
+        );
+          out body;
+          >;
+          out skel qt;
+          `;
+
+  // console.log(fullQuery);
+
+  // fetch the data
+  const myData = await fetch("https://overpass-api.de/api/interpreter", {
+    method: "POST",
+    body: "data=" + encodeURIComponent(fullQuery),
+  })
+    .then((myData) => myData.json())
+    .catch((error) => console.log(error));
+
+  const convertMyData = osmtogeojson(myData);
+
+  L.geoJSON(convertMyData).addTo(map);
+}
+// *****************************  Fetch data Btn: end  *****************************

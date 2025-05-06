@@ -4,14 +4,11 @@ import L from "leaflet";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import osmtogeojson from "osmtogeojson";
-import ways from "../data/ways";
-import polygon from "../data/polygon";
 import "../node_modules/leaflet-geosearch/dist/geosearch.css";
 import * as GeoSearch from "leaflet-geosearch";
-import { getMyData } from "../pages/searchTab";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const map = L.map("map").setView([33.769, 8.746], 6);
+export const map = L.map("map").setView([33.769, 8.746], 6);
 
 const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
@@ -95,8 +92,7 @@ map.pm.addControls({
   drawPolyline: false,
   drawPolygon: false,
   drawText: false,
-  editControls: false,
+  editControls: true,
+  cutPolygon: false,
+  rotateMode: false,
 });
-
-// fetch the data
-getMyData(map);

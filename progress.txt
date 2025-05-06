@@ -27,4 +27,8 @@
 [ ] add layer card:
     [ ] layer funcionalities: delete, show/hide, download, attribute table 
 [ ] modify the basemap group (add a photo)
-[ ] add bootstrap Toast/notifications
+[ ] add bootstrap Toast/notifications 
+[ ] CSS: 
+    [ ] sidebar
+    [ ] layers symbols  
+[x] get bbox coord, selected data and fetch data from Overpass API
