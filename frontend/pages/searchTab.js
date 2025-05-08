@@ -11,7 +11,7 @@ function bboxCoord(mapVariable) {
     const bounds = e.layer._bounds;
     const boundsString = `${bounds._southWest.lat}, ${bounds._southWest.lng},${bounds._northEast.lat},${bounds._northEast.lng}`;
     coordString = boundsString;
-    console.log("boundsString:", boundsString);
+    // console.log("boundsString:", boundsString);
   });
 }
 

@@ -3,41 +3,37 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
-import osmtogeojson from "osmtogeojson";
-import "../node_modules/leaflet-geosearch/dist/geosearch.css";
+// import "../node_modules/leaflet-geosearch/dist/geosearch.css";
 import * as GeoSearch from "leaflet-geosearch";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "leaflet-geosearch/dist/geosearch.css";
+import "leaflet-switch-basemap";
+import "leaflet-switch-basemap/src/L.switchBasemap.css";
 
 export const map = L.map("map").setView([33.769, 8.746], 6);
 
-const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution:
-    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-});
+const osm = new L.basemapsSwitcher(
+  [
+    {
+      layer: L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map), //DEFAULT MAP
+      icon: "../assets/images/img1.PNG",
+      name: "OSM",
+    },
+    {
+      layer: L.tileLayer("https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"),
+      icon: "../assets/images/img3.PNG",
+      name: "Satellite",
+    },
+  ],
+  { position: "topright" }
+);
 
 osm.addTo(map);
 
-const CartoDB_DarkMatter = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd",
-    maxZoom: 20,
-  }
-);
-
-const basemaps = {
-  "Open Street Map": osm,
-  "CatroDB Dark": CartoDB_DarkMatter,
-};
-
 //*********** add GeoJSON data ***********
 // L.geoJSON([ways, polygon]).addTo(map);
-
-//*********** layer group ***********
-const layerGroup = L.control.layers(basemaps).addTo(map).expand();
 
 //*********** geosearch plugin ***********
 const search = new GeoSearch.GeoSearchControl({
@@ -46,43 +42,7 @@ const search = new GeoSearch.GeoSearchControl({
 
 map.addControl(search);
 
-//***********Overpass API: start  ***********
-
-// const result = await fetch("https://overpass-api.de/api/interpreter", {
-//   method: "POST",
-//   // The body contains the query
-//   // to understand the query language see "The Programmatic Query Language" on
-//   // https://wiki.openstreetmap.org/wiki/Overpass_API#The_Programmatic_Query_Language_(OverpassQL)
-//   body:
-//     "data=" +
-//     encodeURIComponent(`
-//       [out:json][timeout:100];
-//       (way[highway]
-//         (
-//           36.80697611816896,
-//           10.136795558181547,
-//           36.81102811921565,
-//           10.140848587892748
-//         );
-//       );
-//         out body;
-//         >;
-//         out skel qt;
-//       `),
-// })
-//   .then((data) => data.json())
-//   .catch((err) => console.log(err));
-
-// // console.log(JSON.stringify(result, null, 2));
-
-// const convertResult = osmtogeojson(result);
-
-// // console.log(convertResult);
-
-// L.geoJSON(convertResult).addTo(map);
-//***********Overpass API: end  ***********
-
-// Draw tool
+//*********** Draw plugin ***********
 map.pm.addControls({
   position: "topleft",
   drawRectangle: true,
