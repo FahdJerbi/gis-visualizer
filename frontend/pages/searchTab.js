@@ -3,6 +3,11 @@ import { map } from "../src/main.js";
 import osmtogeojson from "osmtogeojson";
 
 // *****************************  Fetch data Btn: start  *****************************
+const fetchBtn = document.getElementById("fetch-btn");
+fetchBtn.addEventListener("click", fetchSearchData);
+// Bootsrap toast
+const toastLiveExample = document.getElementById("liveToast");
+const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
 
 // get bbox
 let coordString;
@@ -18,9 +23,6 @@ function bboxCoord(mapVariable) {
 bboxCoord(map);
 
 // get checkboxes and build query
-const fetchBtn = document.getElementById("fetch-btn");
-fetchBtn.addEventListener("click", fetchSearchData);
-
 async function fetchSearchData() {
   const checkboxes = document.querySelectorAll(
     '#data-form input[name="layer"]:checked'
@@ -64,5 +66,8 @@ async function fetchSearchData() {
   const convertMyData = osmtogeojson(myData);
 
   L.geoJSON(convertMyData).addTo(map);
+
+  // successful toast
+  toastBootstrap.show();
 }
 // *****************************  Fetch data Btn: end  *****************************

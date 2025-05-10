@@ -3,7 +3,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "@geoman-io/leaflet-geoman-free";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
-// import "../node_modules/leaflet-geosearch/dist/geosearch.css";
 import * as GeoSearch from "leaflet-geosearch";
 import "leaflet-geosearch/dist/geosearch.css";
 import "leaflet-switch-basemap";
@@ -31,9 +30,6 @@ const osm = new L.basemapsSwitcher(
 );
 
 osm.addTo(map);
-
-//*********** add GeoJSON data ***********
-// L.geoJSON([ways, polygon]).addTo(map);
 
 //*********** geosearch plugin ***********
 const search = new GeoSearch.GeoSearchControl({
