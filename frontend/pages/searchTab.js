@@ -6,8 +6,11 @@ import osmtogeojson from "osmtogeojson";
 const fetchBtn = document.getElementById("fetch-btn");
 fetchBtn.addEventListener("click", fetchSearchData);
 // Bootsrap toast
-const toastLiveExample = document.getElementById("liveToast");
-const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+const successToastDiv = document.getElementById("successToast");
+const successToast = bootstrap.Toast.getOrCreateInstance(successToastDiv);
+
+const warningToastDiv = document.getElementById("warningToast");
+const warningToast = bootstrap.Toast.getOrCreateInstance(warningToastDiv);
 
 // get bbox
 let coordString;
@@ -31,6 +34,9 @@ async function fetchSearchData() {
   const layers = Array.from(checkboxes).map((layer) => layer.value);
   // console.log(checkboxes);
 
+  if (!coordString || layers.length === 0) {
+    return warningToast.show();
+  }
   // console.log("coordString:", coordString);
 
   const query = [];
@@ -46,7 +52,7 @@ async function fetchSearchData() {
       [out:json][timeout:100];
         (
         ${query.join("\n")}
-        
+
         );
           out body;
           >;
@@ -68,6 +74,6 @@ async function fetchSearchData() {
   L.geoJSON(convertMyData).addTo(map);
 
   // successful toast
-  toastBootstrap.show();
+  successToast.show();
 }
 // *****************************  Fetch data Btn: end  *****************************
