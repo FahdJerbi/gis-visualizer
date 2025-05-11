@@ -50,5 +50,13 @@ map.pm.addControls({
   drawText: false,
   editControls: true,
   cutPolygon: false,
+  dragMode: false,
+  editMode: false,
   rotateMode: false,
+});
+
+map.pm.setPathOptions({
+  color: "orange",
+  fillColor: "orange",
+  fillOpacity: 0.2,
 });
