@@ -12,11 +12,13 @@ const successToast = bootstrap.Toast.getOrCreateInstance(successToastDiv);
 const warningToastDiv = document.getElementById("warningToast");
 const warningToast = bootstrap.Toast.getOrCreateInstance(warningToastDiv);
 
+const spinner = document.getElementById("fetch-btn");
+
 // get bbox
 let coordString;
 function bboxCoord(mapVariable) {
   let currentRectangle = null;
-  map.on("pm:create", async (e) => {
+  map.on("pm:create", (e) => {
     const bounds = e.layer._bounds;
     const boundsString = `${bounds._southWest.lat}, ${bounds._southWest.lng},${bounds._northEast.lat},${bounds._northEast.lng}`;
     coordString = boundsString;
@@ -71,18 +73,30 @@ async function fetchSearchData() {
   // console.log(fullQuery);
 
   // fetch the data
-  const myData = await fetch("https://overpass-api.de/api/interpreter", {
-    method: "POST",
-    body: "data=" + encodeURIComponent(fullQuery),
-  })
-    .then((myData) => myData.json())
-    .catch((error) => console.log(error));
+  try {
+    const myData = await fetch("https://overpass-api.de/api/interpreter", {
+      method: "POST",
+      body: "data=" + encodeURIComponent(fullQuery),
+    });
 
-  const convertMyData = osmtogeojson(myData);
+    //  show spinner
+    spinner.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Fetching...`;
+    spinner.disabled = true;
 
-  L.geoJSON(convertMyData).addTo(map);
+    const response = await myData.json();
 
-  // successful toast
-  successToast.show();
+    const convertMyData = osmtogeojson(response);
+
+    L.geoJSON(convertMyData).addTo(map);
+
+    // successful toast
+    successToast.show();
+
+    // remove spinner;
+    spinner.innerHTML = `Fetch Data`;
+    spinner.disabled = false;
+  } catch (error) {
+    console.log(error);
+  }
 }
 // *****************************  Fetch data Btn: end  *****************************
