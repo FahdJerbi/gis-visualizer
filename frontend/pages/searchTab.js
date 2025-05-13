@@ -15,11 +15,19 @@ const warningToast = bootstrap.Toast.getOrCreateInstance(warningToastDiv);
 // get bbox
 let coordString;
 function bboxCoord(mapVariable) {
-  map.on("pm:create", (e) => {
+  let currentRectangle = null;
+  map.on("pm:create", async (e) => {
     const bounds = e.layer._bounds;
     const boundsString = `${bounds._southWest.lat}, ${bounds._southWest.lng},${bounds._northEast.lat},${bounds._northEast.lng}`;
     coordString = boundsString;
     // console.log("boundsString:", boundsString);
+    if (e.layer.pm._shape === "Rectangle") {
+      if (currentRectangle) {
+        currentRectangle.remove();
+      }
+
+      currentRectangle = e.layer;
+    }
   });
 }
 
@@ -34,7 +42,8 @@ async function fetchSearchData() {
   const layers = Array.from(checkboxes).map((layer) => layer.value);
   // console.log(checkboxes);
 
-  if (!coordString || layers.length === 0) {
+  // if (!coordString || layers.length === 0) {
+  if (layers.length === 0) {
     return warningToast.show();
   }
   // console.log("coordString:", coordString);
