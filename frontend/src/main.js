@@ -39,21 +39,21 @@ const search = new GeoSearch.GeoSearchControl({
 map.addControl(search);
 
 //*********** Draw plugin ***********
-map.pm.addControls({
-  position: "topleft",
-  drawRectangle: true,
-  drawMarker: false,
-  drawCircleMarker: false,
-  drawCircle: false,
-  drawPolyline: false,
-  drawPolygon: false,
-  drawText: false,
-  editControls: true,
-  cutPolygon: false,
-  dragMode: false,
-  editMode: false,
-  rotateMode: false,
-});
+// map.pm.addControls({
+//   position: "topleft",
+//   drawRectangle: true,
+//   drawMarker: false,
+//   drawCircleMarker: false,
+//   drawCircle: false,
+//   drawPolyline: false,
+//   drawPolygon: false,
+//   drawText: false,
+//   editControls: true,
+//   cutPolygon: false,
+//   dragMode: false,
+//   editMode: false,
+//   rotateMode: false,
+// });
 
 map.pm.setPathOptions({
   color: "orange",

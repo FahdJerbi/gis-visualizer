@@ -2,6 +2,24 @@ import { osmTagMapping } from "../queries/queries.js";
 import { map } from "../src/main.js";
 import osmtogeojson from "osmtogeojson";
 
+// *****************************  Create Box Btn: start  *****************************
+const createBoxBtn = document.getElementById("create-box-btn");
+const removeBoxBtn = document.getElementById("remove-box-btn");
+
+createBoxBtn.addEventListener("click", createBox);
+removeBoxBtn.addEventListener("click", removeBox);
+
+function createBox() {
+  map.pm.enableDraw("Rectangle");
+
+  // console.log("clicked");
+}
+
+function removeBox() {
+  map.pm.enableGlobalRemovalMode();
+}
+// *****************************  Create Box Btn: start  *****************************
+
 // *****************************  Fetch data Btn: start  *****************************
 const fetchBtn = document.getElementById("fetch-btn");
 fetchBtn.addEventListener("click", fetchSearchData);
@@ -44,8 +62,8 @@ async function fetchSearchData() {
   const layers = Array.from(checkboxes).map((layer) => layer.value);
   // console.log(checkboxes);
 
-  // if (!coordString || layers.length === 0) {
-  if (layers.length === 0) {
+  if (!coordString || layers.length === 0) {
+    // if (layers.length === 0) {
     return warningToast.show();
   }
   // console.log("coordString:", coordString);
