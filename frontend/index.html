@@ -179,14 +179,39 @@
           </nav>
           <div class="tab-content" id="nav-tabContent">
             <div
-              class="tab-pane fade"
+              class="tab-pane fade show active"
               id="layers"
               role="tabpanel"
               aria-labelledby="nav-home-tab"
               tabindex="0"
-            ></div>
+            >
+              <div
+                class="layer-container card text-bg-dark border-secondary mb-3"
+              >
+                <div
+                  class="layercontainer-name card-body"
+                  style="display: flex; justify-content: space-between"
+                >
+                  <h5 class="card-title">layer_name</h5>
+                  <button type="button" class="btn btn-warning btn-sm">
+                    <img src="./assets/images/eye-fill.svg" alt="" />
+                  </button>
+                </div>
+                <div class="layercontainer-functions text-center card-body">
+                  <button type="button" class="btn btn-danger btn-sm">
+                    <img src="./assets/images/trash-fill.svg" alt="" />
+                  </button>
+                  <button type="button" class="btn btn-warning btn-sm">
+                    <img src="./assets/images/download.svg" alt="" />
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm">
+                    <img src="./assets/images/table.svg" alt="" />
+                  </button>
+                </div>
+              </div>
+            </div>
             <div
-              class="tab-pane fade show active"
+              class="tab-pane fade"
               id="search"
               role="tabpanel"
               aria-labelledby="nav-profile-tab"
