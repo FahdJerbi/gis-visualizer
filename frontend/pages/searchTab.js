@@ -1,6 +1,7 @@
 import { osmTagMapping } from "../queries/queries.js";
 import { map } from "../src/main.js";
 import osmtogeojson from "osmtogeojson";
+import { renderLayerCards } from "./layersTab.js";
 
 // *****************************  Create Box Btn: start  *****************************
 const createBoxBtn = document.getElementById("create-box-btn");
@@ -31,6 +32,9 @@ const warningToastDiv = document.getElementById("warningToast");
 const warningToast = bootstrap.Toast.getOrCreateInstance(warningToastDiv);
 
 const spinner = document.getElementById("fetch-btn");
+
+// global array for layers
+export let fetchedLayers = [];
 
 // get bbox
 let coordString;
@@ -105,7 +109,19 @@ async function fetchSearchData() {
 
     const convertMyData = osmtogeojson(response);
 
-    L.geoJSON(convertMyData).addTo(map);
+    convertMyData.features.forEach((feature) => {
+      let feature_id = feature.id.split("/")[1];
+      // console.log(feature_id);
+
+      fetchedLayers.push({ ...feature, feature_id });
+
+      // 1- merge same features into one layer
+    });
+
+    // console.log(fetchedLayers);
+    // L.geoJSON(convertMyData).addTo(map);
+
+    renderLayerCards();
 
     // successful toast
     successToast.show();

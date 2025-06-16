@@ -1,96 +1,64 @@
+import L from "leaflet";
 import layers from "../data/layers";
-// import {  } from "@fortawesome/fontawesome-free";
+import { map } from "../src/main";
+import { fetchedLayers } from "./searchTab";
 
-const layersContainer = document.getElementById("layers");
+export function renderLayerCards() {
+  const container = document.getElementById("layers");
+  container.innerHTML = "";
 
-function showLayers() {
-  layersContainer.innerHTML = "";
+  // 1- add layer card functionalities:
+  // zoom to layer
+  // remove
+  // visible
+  // download
+  // arrtibutes
 
-  if (layers.length === 0) {
-    layersContainer.innerHTML = "<p>No Lyaers</p>";
-    return;
+  // 2- add hover text for layer card buttons
+
+  // ************  layer card functionalities  ************
+  function zoomToLayer(layerItem) {
+    map.fitBounds(layerItem.getBounds());
   }
 
-  layers.map((layer) => {
-    // layer Card
+  fetchedLayers.forEach((item) => {
+    const layer = L.geoJSON(item).addTo(map);
+
     const card = document.createElement("div");
-    card.className = "card-body";
-    const title = document.createElement("h5");
-    title.className = "card-title";
-    title.textContent = layer.name;
+    card.id = `${item.feature_id}`;
+    card.className = "layer-container card text-bg-dark border-secondary mb-3";
+    card.innerHTML = `
+        <div
+          class="layercontainer-name card-body"
+          style="display: flex; justify-content: space-between"
+        >
+          <h5 class="card-title">layer_name</h5>
+          <button id="show-layer-btn-${item.feature_id}" type="button" class="btn btn-warning btn-sm">
+            <img src="./assets/images/eye-fill.svg" alt="" />
+          </button>
+        </div>
+        <div class="layercontainer-functions text-center card-body">
+          <button id="remove-btn-${item.feature_id}" type="button" class="btn btn-light btn-sm">
+            <img src="./assets/images/trash-fill.svg" alt="" />
+          </button>
+          <button id="download-btn" type="button" class="btn btn-light btn-sm">
+            <img src="./assets/images/download.svg" alt="" />
+          </button>
+          <button id="attributes-btn" type="button" class="btn btn-light btn-sm">
+            <img src="./assets/images/table.svg" alt="" />
+          </button>
+          <button id="zoom-to-layer-btn-${item.feature_id}" type="button" class="btn btn-light btn-sm">
+            <img src="./assets/images/search.svg" alt="" />
+          </button>
+        </div>
+    `;
 
-    const btn = document.createElement("a");
-    btn.className = "btn btn-danger";
-    btn.textContent = "Delete";
+    container.appendChild(card);
 
-    // switcher
-    const switcher = document.createElement("div");
-    switcher.className = "form-check form-switch";
-    const switcherInput = document.createElement("input");
-    switcherInput.className = "form-check-input";
-    switcherInput.type = "checkbox";
-    switcherInput.role = "switch";
-    switcherInput.id = "switchCheckChecked";
-    switcherInput.checked = true;
-    const switcherLabel = document.createElement("label");
-    switcherLabel.className = "form-check-label";
-    switcherLabel.htmlFor = "switchCheckChecked";
-
-    switcher.appendChild(switcherInput);
-    switcher.appendChild(switcherLabel);
-
-    card.appendChild(title);
-    card.appendChild(btn);
-    card.appendChild(switcher);
-
-    layersContainer.appendChild(card);
+    // const btn = document.getElementById(`show-layer-btn-${item.feature_id}`);
+    const zoomToLayerBtn = document.getElementById(
+      `zoom-to-layer-btn-${item.feature_id}`
+    );
+    zoomToLayerBtn.addEventListener("click", () => zoomToLayer(layer));
   });
 }
-
-// showLayers();
-
-// function showLayers() {
-//   layersContainer.innerHTML = "";
-
-//   if (layers.length === 0) {
-//     layersContainer.innerHTML = "<p>No Lyaers</p>";
-//     return;
-//   }
-
-//   layers.map((layer) => {
-//     // layer Card
-//     const card = document.createElement("div");
-//     card.className = "card-body";
-//     const title = document.createElement("h5");
-//     title.className = "card-title";
-//     title.textContent = layer.name;
-
-//     const btn = document.createElement("a");
-//     btn.className = "btn btn-danger";
-//     btn.textContent = "Delete";
-
-//     // switcher
-//     const switcher = document.createElement("div");
-//     switcher.className = "form-check form-switch";
-//     const switcherInput = document.createElement("input");
-//     switcherInput.className = "form-check-input";
-//     switcherInput.type = "checkbox";
-//     switcherInput.role = "switch";
-//     switcherInput.id = "switchCheckChecked";
-//     switcherInput.checked = true;
-//     const switcherLabel = document.createElement("label");
-//     switcherLabel.className = "form-check-label";
-//     switcherLabel.htmlFor = "switchCheckChecked";
-
-//     switcher.appendChild(switcherInput);
-//     switcher.appendChild(switcherLabel);
-
-//     card.appendChild(title);
-//     card.appendChild(btn);
-//     card.appendChild(switcher);
-
-//     layersContainer.appendChild(card);
-//   });
-// }
-
-// add a zoom to layer funcionality once clicked on a layer card
