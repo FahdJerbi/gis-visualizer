@@ -12,8 +12,6 @@ removeBoxBtn.addEventListener("click", removeBox);
 
 function createBox() {
   map.pm.enableDraw("Rectangle");
-
-  // console.log("clicked");
 }
 
 function removeBox() {
@@ -111,7 +109,6 @@ async function fetchSearchData() {
 
     convertMyData.features.forEach((feature) => {
       let feature_id = feature.id.split("/")[1];
-      // console.log(feature_id);
 
       fetchedLayers.push({ ...feature, feature_id });
 

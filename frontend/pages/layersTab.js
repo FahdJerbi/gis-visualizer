@@ -8,10 +8,10 @@ export function renderLayerCards() {
   container.innerHTML = "";
 
   // 1- add layer card functionalities:
-  // zoom to layer
-  // remove
+  // zoom to layer [x]
+  // remove  []
   // visible
-  // download
+  // download  []
   // arrtibutes
 
   // 2- add hover text for layer card buttons
@@ -19,6 +19,15 @@ export function renderLayerCards() {
   // ************  layer card functionalities  ************
   function zoomToLayer(layerItem) {
     map.fitBounds(layerItem.getBounds());
+  }
+
+  function removeCardLayer(layerId, layer) {
+    let card = document.getElementById(layerId);
+
+    if (card && map.hasLayer(layer)) {
+      card.remove();
+      map.removeLayer(layer);
+    }
   }
 
   fetchedLayers.forEach((item) => {
@@ -60,5 +69,10 @@ export function renderLayerCards() {
       `zoom-to-layer-btn-${item.feature_id}`
     );
     zoomToLayerBtn.addEventListener("click", () => zoomToLayer(layer));
+
+    const removeBtn = document.getElementById(`remove-btn-${item.feature_id}`);
+    removeBtn.addEventListener("click", () =>
+      removeCardLayer(item.feature_id, layer)
+    );
   });
 }
