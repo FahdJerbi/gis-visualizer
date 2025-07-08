@@ -12,6 +12,7 @@
     - install and initiate Sequelize
     - user model
 [ ] routes: 
+    - middlewares (for errors)
     - register (with email/OTP verification)
     - login
     - fetch layers from osm
