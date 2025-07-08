@@ -6,13 +6,18 @@
 
 */ Backend:
 [x] dependencies: 
-    express, mongoose, nodemon, env
+    express, postgres, nodemon, env
 [x] init github repo
-[x] prepare database
-[x] user model
+[ ] prepare database:
+    - install and initiate Sequelize
+    - user model
 [ ] routes: 
-    -[x] register
+    - register (with email/OTP verification)
     - login
+    - fetch layers from osm
+    - get all existing layers 
+    - delete all layers
+    - delete single layer
 [ ] documentation
 
 */ Frontend:
@@ -24,11 +29,12 @@
 [x] download data: Overpass APIs ??
 [x] draw shapefiles Leaflet plugins:  Leaflet Geoman
 [x] get bbox and fetch data
-[ ] add layer card:
-    [ ] layer funcionalities: delete, show/hide, download, attribute table 
-[ ] modify the basemap group (add a photo)
-[ ] add bootstrap Toast/notifications 
-[ ] CSS: 
-    [ ] sidebar
-    [ ] layers symbols  
+[x] add layer card:
+    [x] layer funcionalities: delete, show/hide, download, attribute table 
+[x] modify the basemap group (add a photo)
+[x] add bootstrap Toast/notifications 
+[x] CSS: 
+    [x] sidebar
+    [x] layers symbols  
 [x] get bbox coord, selected data and fetch data from Overpass API
+[ ] fix page CSS
