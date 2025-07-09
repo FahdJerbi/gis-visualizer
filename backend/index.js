@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const sequelize = require("./config/db");
 const userRouter = require("./routes/userRoutes");
 const loginRegisterRouter = require("./routes/loginRegisterRoutes");
 require("dotenv").config();
@@ -23,3 +24,8 @@ app.listen(process.env.PORT, () => {
     console.log(error);
   }
 });
+
+// check list
+//  - check db
+//  - check middlewares (json , errors )
+//  - check register and login
