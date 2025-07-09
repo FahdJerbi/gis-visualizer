@@ -168,7 +168,7 @@ function mergeFeatures(featuresObject) {
     });
   }
 
-  console.log(mergedDataObject);
+  // console.log(mergedDataObject);
 
   return mergedDataObject;
 }
@@ -226,7 +226,6 @@ async function fetchSearchData() {
       fetchedLayers.push({ ...feature, feature_id });
     });
 
-    console.log("mergedDataObject:", mergedDataObject);
     getFeaturesTag(convertMyData);
     renderLayerCards();
 

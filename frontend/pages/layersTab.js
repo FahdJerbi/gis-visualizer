@@ -118,6 +118,16 @@ export function renderLayerCards() {
     }
   }
 
+  function zoomToLayer(name) {
+    const layer = mapLayers[name];
+    if (!layer) return;
+
+    // if (layer && map.hasLayer(layer)) {
+    //   map.removeLayer(layer);
+    // }
+    map.fitBounds(layer.getBounds());
+  }
+
   function downloadLayer(name) {
     const layer = mapLayers[name];
     if (!layer) return;
@@ -154,17 +164,15 @@ export function renderLayerCards() {
     }
   }
 
-  function getColorForCategory(tag) {
-    const colors = {
-      highway: "#ff7800",
-      building: "#0074D9",
-      landuse: "#2ECC40",
-      waterway: "#39CCCC",
-      railway: "#B10DC9",
-      default: "#AAAAAA",
-    };
-    return colors[tag] || colors.default;
-  }
+  // function getColorForCategory(tag) {
+  //   const colors = {
+  //     highway: "#ff0000",
+  //     building: "#363636",
+  //     waterway: "#39CCCC",
+  //     default: "#AAAAAA",
+  //   };
+  //   return colors[tag] || colors.default;
+  // }
 
   // ***************** helper functions: end  *******************
 
@@ -174,26 +182,50 @@ export function renderLayerCards() {
   mergedDataObject.forEach(({ name, geojson }) => {
     // Create Leaflet layer
     const layer = L.geoJSON(geojson, {
-      style: { color: getColorForCategory(name), weight: 2 },
+      style: { color: "#363636", weight: 1 },
     }).addTo(map);
 
     // Fit map to layer
-    map.fitBounds(layer.getBounds());
+    // map.fitBounds(layer.getBounds());
 
     // Store layer
     mapLayers[name] = layer;
 
     // Create card
     const card = document.createElement("div");
-    card.className = "card my-2";
+    // card.className = "card my-2";
+    // card.innerHTML = `
+    //   <div class="card-body">
+    //     <h5 class="card-title">${name}</h5>
+    //     <button class="btn btn-sm btn-secondary" data-action="toggle" data-name="${name}">👁️ Toggle</button>
+    //     <button class="btn btn-sm btn-primary" data-action="download" data-name="${name}">⬇️ Download</button>
+    //     <button class="btn btn-sm btn-danger" data-action="delete" data-name="${name}">🗑️ Delete</button>
+    //   </div>
+    // `;
+
+    card.className = "layer-container card text-bg-dark border-secondary mb-3";
     card.innerHTML = `
-      <div class="card-body">
-        <h5 class="card-title">${name}</h5>
-        <button class="btn btn-sm btn-secondary" data-action="toggle" data-name="${name}">👁️ Toggle</button>
-        <button class="btn btn-sm btn-primary" data-action="download" data-name="${name}">⬇️ Download</button>
-        <button class="btn btn-sm btn-danger" data-action="delete" data-name="${name}">🗑️ Delete</button>
-      </div>
-    `;
+            <div
+              class="layercontainer-name card-body"
+              style="display: flex; justify-content: space-between"
+            >
+              <h5 class="card-title">${name}</h5>
+              </div>
+              <div class="layercontainer-functions text-center card-body">
+              <button id="remove-btn" data-action="delete" data-name="${name}" type="button" class="btn btn-light btn-sm">
+              <img src="./assets/images/trash-fill.svg" alt="" />
+              </button>
+              <button id="download-btn" data-action="download" data-name="${name}" type="button" class="btn btn-light btn-sm">
+              <img src="./assets/images/download.svg" alt="" />
+              </button>
+              <button id="zoom-to-layer-btn" data-action="click" data-name="${name}" type="button" class="btn btn-light btn-sm">
+              <img src="./assets/images/search.svg" alt="" />
+              </button>
+              <button id="show-layer-btn" data-action="toggle" data-name="${name}" type="button" class="btn btn-warning btn-sm">
+                <img src="./assets/images/eye-fill.svg" alt="" />
+              </button>
+            </div>
+        `;
     container.appendChild(card);
   });
 
@@ -206,6 +238,7 @@ export function renderLayerCards() {
       if (action === "toggle") toggleLayer(name);
       if (action === "download") downloadLayer(name);
       if (action === "delete") deleteLayer(name);
+      if (action === "click") zoomToLayer(name);
     });
   });
 }
