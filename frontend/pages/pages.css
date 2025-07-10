@@ -1,0 +1,23 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  padding: 10px;
+}
+
+.card-btn {
+  width: 30px;
+  height: 30px;
+}
+
+.card-btn img {
+  display: flex;
+  width: 15px;
+  height: 15px;
+  margin-left: -1px;
+}
+
+.layercontainer-name {
+  text-transform: capitalize;
+}

@@ -1,3 +1,4 @@
+import "./pages.css";
 import L from "leaflet";
 import layers from "../data/layers";
 import { map } from "../src/main";
@@ -205,23 +206,18 @@ export function renderLayerCards() {
 
     card.className = "layer-container card text-bg-dark border-secondary mb-3";
     card.innerHTML = `
-            <div
-              class="layercontainer-name card-body"
-              style="display: flex; justify-content: space-between"
-            >
-              <h5 class="card-title">${name}</h5>
-              </div>
+              <h6 class="layercontainer-name card-title">${name}</h6>
               <div class="layercontainer-functions text-center card-body">
-              <button id="remove-btn" data-action="delete" data-name="${name}" type="button" class="btn btn-light btn-sm">
+              <button id="remove-btn" data-action="delete" data-name="${name}" type="button" class="btn btn-light btn-sm card-btn">
               <img src="./assets/images/trash-fill.svg" alt="" />
               </button>
-              <button id="download-btn" data-action="download" data-name="${name}" type="button" class="btn btn-light btn-sm">
+              <button id="download-btn" data-action="download" data-name="${name}" type="button" class="btn btn-light btn-sm card-btn">
               <img src="./assets/images/download.svg" alt="" />
               </button>
-              <button id="zoom-to-layer-btn" data-action="click" data-name="${name}" type="button" class="btn btn-light btn-sm">
+              <button id="zoom-to-layer-btn" data-action="click" data-name="${name}" type="button" class="btn btn-light btn-sm card-btn">
               <img src="./assets/images/search.svg" alt="" />
               </button>
-              <button id="show-layer-btn" data-action="toggle" data-name="${name}" type="button" class="btn btn-warning btn-sm">
+              <button id="show-layer-btn" data-action="toggle" data-name="${name}" type="button" class="btn btn-light btn-sm card-btn">
                 <img src="./assets/images/eye-fill.svg" alt="" />
               </button>
             </div>
