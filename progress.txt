@@ -38,4 +38,7 @@
     [x] sidebar
     [x] layers symbols  
 [x] get bbox coord, selected data and fetch data from Overpass API
-[ ] fix page CSS
+[ ] fix page CSS:
+        - changer sidebar color to white (https://getbootstrap.com/docs/5.0/examples/sidebars/#)
+        - Layer and Search lists (headers)
+        - app title logo 
