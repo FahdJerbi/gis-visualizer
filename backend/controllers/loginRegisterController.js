@@ -70,9 +70,18 @@ const userLogin = async (req, res) => {
       });
     }
 
+    const userToken = await jwt.sign(
+      { UserId: findUser.id },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "7d",
+      }
+    );
+
     res.status(200).json({
       status: true,
       message: "You are logged in, welcome back !",
+      token: userToken,
     });
   } catch (error) {
     console.log(error);
