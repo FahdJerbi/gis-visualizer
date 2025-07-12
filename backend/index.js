@@ -9,10 +9,6 @@ require("dotenv").config();
 app.use(express.json());
 
 // routes
-app.get("/", (req, res) => {
-  res.send("test route !");
-});
-
 app.use("/api/user", userRouter);
 app.use("/api/user/auth", loginRegisterRouter);
 

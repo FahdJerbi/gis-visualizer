@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userRegister = async (req, res) => {
   const { name, email, password } = req.body;
@@ -39,13 +40,47 @@ const userRegister = async (req, res) => {
     console.log("Cannot Create Account Error:", error);
     res.status(500).json({
       status: false,
-      message: "Something wrong with the server",
+      message: "Something wrong with the register service",
     });
   }
 };
 
-const userLogin = (req, res) => {
-  res.send("login route");
+const userLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const findUser = await User.findOne({ where: { email } });
+
+    if (!findUser) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid Credentials",
+      });
+    }
+
+    const verifyPassword = await bcrypt.compare(
+      password,
+      findUser.password.trim()
+    );
+
+    if (!verifyPassword) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid Credentials",
+      });
+    }
+
+    res.status(200).json({
+      status: true,
+      message: "You are logged in, welcome back !",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: false,
+      message: "Something wrong with the login service",
+    });
+  }
 };
 
 module.exports = { userRegister, userLogin };
