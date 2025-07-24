@@ -1,0 +1,47 @@
+nav {
+  margin-bottom: 10px;
+}
+
+.nav-underline .nav-link {
+  color: #ffffff;
+}
+
+.nav-underline .nav-link.active,
+.menu-logo:active {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+/* ***************  Layers menu:*************** */
+.no-layers-text {
+  text-align: center;
+}
+
+.no-layers-text p,
+.instruction-text {
+  font-size: small;
+  margin-bottom: 10px;
+}
+
+/* ***************  Search menu:*************** */
+.create-box-tools {
+  display: flex;
+  gap: 10px;
+}
+
+#create-box-btn {
+  width: 80%;
+}
+
+.data-options {
+  margin-top: 20px;
+}
+
+form div {
+  margin-left: 5px;
+}
+
+#fetch-btn {
+  width: 150px;
+  margin: 20px 40px;
+}

@@ -17,7 +17,7 @@ body {
 }
 
 /* sidebar */
-html {
+/*html {
   height: -webkit-fill-available;
 }
 
@@ -30,7 +30,7 @@ main {
   overflow-x: auto;
   overflow-y: hidden;
 }
-
+ 
 .b-example-divider {
   flex-shrink: 0;
   width: 1.5rem;
@@ -107,4 +107,4 @@ main {
 }
 .lh-tight {
   line-height: 1.25;
-}
+} */
